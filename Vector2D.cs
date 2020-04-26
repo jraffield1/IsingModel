@@ -19,25 +19,16 @@ namespace IsingModel
             position = c;
         }
 
-        public double x() { return position.Real; }
-        public double y() { return position.Imaginary; }
+        public double X() { return position.Real; }
+        public double Y() { return position.Imaginary; }
 
         public Complex GetPosition() { return position; }
 
-        public double Distance(Vector2D other)
-        {
-            return (position - other.GetPosition()).Magnitude;
-        }
+        public double Distance(Vector2D other){ return (position - other.GetPosition()).Magnitude; }
 
-        public double Magnitude()
-        {
-            return position.Magnitude;
-        }
+        public double Magnitude(){ return position.Magnitude; }
 
-        public Vector2D Unit()
-        {
-            return new Vector2D(position / position.Magnitude);
-        }
+        public Vector2D Unit() { return new Vector2D(position / position.Magnitude); }
 
         public Vector2D Rotate(double theta)
         {
@@ -47,25 +38,20 @@ namespace IsingModel
             return new Vector2D(position.Real * c - position.Imaginary * s, position.Real * s + position.Imaginary * c);
         }
 
-        public Vector2D Add(Vector2D other)
-        {
-            return new Vector2D(position + other.GetPosition());
-        }
+        public Vector2D Add(Vector2D other){ return new Vector2D(position + other.GetPosition()); }
+        public static Vector2D operator +(Vector2D A, Vector2D B){ return A.Add(B); }
 
-        public Vector2D Multiply(double t)
-        {
-            return new Vector2D(position * t);
-        }
+        public Vector2D Subtract(Vector2D other) { return new Vector2D(position - other.GetPosition()); }
+        public static Vector2D operator -(Vector2D A, Vector2D B) { return A.Subtract(B); }
 
-        public Vector2D Negate()
-        {
-            return new Vector2D(-1 * position);
-        }
+        public Vector2D Multiply(double t){ return new Vector2D(position * t); }
+        public static Vector2D operator *(Vector2D A, double B) { return A.Multiply(B); }
+        public static Vector2D operator *(double A, Vector2D B) { return B.Multiply(A); }
 
-        public double Phase()
-        {
-            return position.Phase;
-        }
+        public Vector2D Negate(){ return new Vector2D(-1 * position); }
+        public static Vector2D operator -(Vector2D A) { return A.Negate(); }
+
+        public double Phase(){ return position.Phase; }
 
         public override bool Equals(Object obj)
         {
@@ -81,14 +67,11 @@ namespace IsingModel
             }
         }
 
-        public override int GetHashCode()
-        {
-            return position.GetHashCode();
-        }
+        public override int GetHashCode(){ return position.GetHashCode(); }
 
         public override string ToString()
         {
-            return x() + " " + y();
+            return position.Real + " " + position.Imaginary;
         }
     }
 }
