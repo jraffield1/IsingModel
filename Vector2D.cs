@@ -10,6 +10,8 @@ namespace IsingModel
         private Complex position;
         private double EPSILON = 0.0001;
 
+        public static Vector2D ZERO = new Vector2D(0,0);
+
         public Vector2D(double r, double i)
         {
             position = new Complex(r, i);
