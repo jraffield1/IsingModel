@@ -1,0 +1,13 @@
+C:\Users\Jesse Raffield\source\repos\IsingModel\bin\Debug\netcoreapp3.1\IsingModel.exe
+C:\Users\Jesse Raffield\source\repos\IsingModel\bin\Debug\netcoreapp3.1\IsingModel.deps.json
+C:\Users\Jesse Raffield\source\repos\IsingModel\bin\Debug\netcoreapp3.1\IsingModel.runtimeconfig.json
+C:\Users\Jesse Raffield\source\repos\IsingModel\bin\Debug\netcoreapp3.1\IsingModel.runtimeconfig.dev.json
+C:\Users\Jesse Raffield\source\repos\IsingModel\bin\Debug\netcoreapp3.1\IsingModel.dll
+C:\Users\Jesse Raffield\source\repos\IsingModel\bin\Debug\netcoreapp3.1\IsingModel.pdb
+C:\Users\Jesse Raffield\source\repos\IsingModel\obj\Debug\netcoreapp3.1\IsingModel.csprojAssemblyReference.cache
+C:\Users\Jesse Raffield\source\repos\IsingModel\obj\Debug\netcoreapp3.1\IsingModel.csproj.CoreCompileInputs.cache
+C:\Users\Jesse Raffield\source\repos\IsingModel\obj\Debug\netcoreapp3.1\IsingModel.AssemblyInfoInputs.cache
+C:\Users\Jesse Raffield\source\repos\IsingModel\obj\Debug\netcoreapp3.1\IsingModel.AssemblyInfo.cs
+C:\Users\Jesse Raffield\source\repos\IsingModel\obj\Debug\netcoreapp3.1\IsingModel.dll
+C:\Users\Jesse Raffield\source\repos\IsingModel\obj\Debug\netcoreapp3.1\IsingModel.pdb
+C:\Users\Jesse Raffield\source\repos\IsingModel\obj\Debug\netcoreapp3.1\IsingModel.genruntimeconfig.cache

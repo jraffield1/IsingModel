@@ -6,7 +6,7 @@ namespace IsingModel
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Lattice_Graph graph = new Lattice_Graph(4,4,1);
         }
     }
 }
