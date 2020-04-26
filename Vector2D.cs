@@ -8,7 +8,6 @@ namespace IsingModel
     class Vector2D
     {
         private Complex position;
-        private double EPSILON = 0.0001;
 
         public static Vector2D ZERO = new Vector2D(0,0);
 
