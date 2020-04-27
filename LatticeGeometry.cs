@@ -22,7 +22,12 @@ namespace IsingModel
         public LatticeGeometry(Lattice_Graph lat, double spacing)
         {
             lattice = lat;
-            guide_vector = new Vector2D(spacing, 0.0);
+
+            if(lat.GetCurvatureSign() == 0)
+                guide_vector = new Euclvector2D(spacing, 0.0);
+            else if(lat.GetCurvatureSign() == -1)
+                guide_vector = new Gyrovector2D(spacing, 0.0);
+
             valid = new List<bool>(4000);
             geometryPoints = new List<Vector2D>(4000);
 
@@ -32,7 +37,12 @@ namespace IsingModel
         public LatticeGeometry(int p, int q, int r, double spacing)
         {
             lattice = new Lattice_Graph(p, q, r, false);
-            guide_vector = new Vector2D(spacing, 0.0);
+
+            if (lattice.GetCurvatureSign() == 0)
+                guide_vector = new Euclvector2D(spacing, 0.0);
+            else if (lattice.GetCurvatureSign() == -1)
+                guide_vector = new Gyrovector2D(spacing, 0.0);
+
             valid = new List<bool>(4000);
             geometryPoints = new List<Vector2D>(4000);
 
@@ -56,8 +66,12 @@ namespace IsingModel
             // set up variables
             for (int i = 0; i < lattice.Size; i++)
             {
-                valid.Add(false);                                // whether or not a position has been chosen yet
-                geometryPoints.Add(new Vector2D(0.0, 0.0));      // position vector for each site
+                valid.Add(false);   // whether or not a position has been chosen yet
+
+                if (lattice.GetCurvatureSign() == 0)
+                    geometryPoints.Add(new Euclvector2D(0.0, 0.0));
+                else if (lattice.GetCurvatureSign() == -1)
+                    geometryPoints.Add(new Gyrovector2D(0.0, 0.0));
             }
 
             if (lattice.R == 0)
@@ -170,7 +184,7 @@ namespace IsingModel
             double dir = ( (-geometryPoints[index]) + geometryPoints[rotation_map[stem]] ).Phase();
 
             // Orient the guide vector so that it faces the correct way
-            Vector2D between = guide_vector.Rotate(dir);
+            var between = guide_vector.Rotate(dir);
 
             for (int i = 0; i < rotation_map.Count; i++)
             {

@@ -38,6 +38,18 @@ namespace IsingModel
                     Size++;
         }
 
+        public int GetCurvatureSign()
+        {
+            int defect = (P - 2) * (Q - 2);
+
+            if (defect < 4)
+                return 1;
+            else if (defect > 4)
+                return -1;
+            else
+                return 0;
+        }
+
         //Add neighbor to Lattice site but repeated pairs aren't allowed
         private void AddNeighborUnique(int site, int neighbor)
         {

@@ -6,7 +6,7 @@ namespace IsingModel
     {
         static void Main(string[] args)
         {
-            var geomGraph = new LatticeGeometry(4, 4, 12, 1.0);
+            var geomGraph = new LatticeGeometry(3, 7, 1, 0.5);
         }
     }
 }
