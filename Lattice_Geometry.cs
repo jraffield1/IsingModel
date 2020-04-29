@@ -4,93 +4,92 @@ using System.Text;
 
 namespace IsingModel
 {
-    class LatticeGeometry
+    class Lattice_Geometry
     {
-        private Lattice_Graph lattice;
+        public Lattice_Graph Lattice;
+        public List<Vector2D> GeometryPoints;
+        public double LengthScale;
 
         private List<bool> valid;
-        private List<Vector2D> geometryPoints;
 
-        private Vector2D guide_vector;
+        private Vector2D GuideVector;
 
-        public LatticeGeometry()
+        public Lattice_Geometry()
         {
             valid = new List<bool>(4000);
-            geometryPoints = new List<Vector2D>(4000);
+            GeometryPoints = new List<Vector2D>(4000);
         }
 
-        public LatticeGeometry(Lattice_Graph lat, double spacing)
+        public Lattice_Geometry(Lattice_Graph lat, double spacing)
         {
-            lattice = lat;
+            Lattice = lat;
 
             if(lat.GetCurvatureSign() == 0)
-                guide_vector = new Euclvector2D(spacing, 0.0);
+                GuideVector = new Euclvector2D(spacing, 0.0);
             else if(lat.GetCurvatureSign() == -1)
-                guide_vector = new Gyrovector2D(spacing, 0.0);
+                GuideVector = new Gyrovector2D(spacing, 0.0);
 
             valid = new List<bool>(4000);
-            geometryPoints = new List<Vector2D>(4000);
+            GeometryPoints = new List<Vector2D>(4000);
+            LengthScale = spacing;
 
             Compose();
         }
 
-        public LatticeGeometry(int p, int q, int r, double spacing)
+        public Lattice_Geometry(int p, int q, int r, double spacing)
         {
-            lattice = new Lattice_Graph(p, q, r, false);
+            Lattice = new Lattice_Graph(p, q, r, false);
 
-            if (lattice.GetCurvatureSign() == 0)
-                guide_vector = new Euclvector2D(spacing, 0.0);
-            else if (lattice.GetCurvatureSign() == -1)
-                guide_vector = new Gyrovector2D(spacing, 0.0);
+            if (Lattice.GetCurvatureSign() == 0)
+                GuideVector = new Euclvector2D(spacing, 0.0);
+            else if (Lattice.GetCurvatureSign() == -1)
+                GuideVector = new Gyrovector2D(spacing, 0.0);
 
             valid = new List<bool>(4000);
-            geometryPoints = new List<Vector2D>(4000);
+            GeometryPoints = new List<Vector2D>(4000);
+            LengthScale = spacing;
 
             Compose();
         }
 
-        List<int> GetRingMap() { return lattice.GetRingMap(); }
-        List<bool> GetValid() { return valid; }
-        List<Vector2D> GetPoints() { return geometryPoints; }
-        Lattice_Graph GetGraph() { return lattice; }
-        int Size() { return lattice.Size; }
+        public int Size() { return Lattice.Size; }
 
         public void PrintToScreen()
         {
-            for (int i = 0; i < geometryPoints.Count; i++)
-                Console.WriteLine(geometryPoints[i].ToString());
+            for (int i = 0; i < GeometryPoints.Count; i++)
+                Console.WriteLine(GeometryPoints[i].ToString());
         }
 
         public void Compose()
         {
             // set up variables
-            for (int i = 0; i < lattice.Size; i++)
+            for (int i = 0; i < Lattice.Size; i++)
             {
                 valid.Add(false);   // whether or not a position has been chosen yet
 
-                if (lattice.GetCurvatureSign() == 0)
-                    geometryPoints.Add(new Euclvector2D(0.0, 0.0));
-                else if (lattice.GetCurvatureSign() == -1)
-                    geometryPoints.Add(new Gyrovector2D(0.0, 0.0));
+                if (Lattice.GetCurvatureSign() == 0)
+                    GeometryPoints.Add(new Euclvector2D(0.0, 0.0));
+                else if (Lattice.GetCurvatureSign() == -1)
+                    GeometryPoints.Add(new Gyrovector2D(0.0, 0.0));
             }
 
-            if (lattice.R == 0)
+            if (Lattice.R == 0)
             {
                 valid[0] = true;
                 return;
             }
 
-            int p = lattice.P;
-            int q = lattice.Q;
+            int p = Lattice.P;
+            int q = Lattice.Q;
 
             // The first two sites have a defined positions
-            geometryPoints[1] = guide_vector;
+            GeometryPoints[1] = GuideVector;
             valid[0] = true;
             valid[1] = true;
 
             // Iterate through each site, using its position to determine the position
             // of its neighbors
-            for (int i = 1; i < lattice.Size; i++)
+            for (int i = 1; i < Lattice.Size; i++)
             {
                 Connect(i);
             }
@@ -104,12 +103,12 @@ namespace IsingModel
             R1 = new List<int>();
             R2 = new List<int>();
 
-            List<int> map = lattice.GetRingMap();
+            List<int> map = Lattice.GetRingMap();
 
             int refr = map[index];
             int sub;
 
-            List<List<int>> list = lattice.GetVertices();
+            List<List<int>> list = Lattice.GetVertices();
 
             for (int i = 0; i < list[index].Count; i++)
             {
@@ -152,13 +151,13 @@ namespace IsingModel
         // to calculate the positions of the rest of them
         public void Connect(int index)
         {
-            double dt = 2 * Math.PI / lattice.Q;     //angular separation between each neighbor
+            double dt = 2 * Math.PI / Lattice.Q;     //angular separation between each neighbor
 
             List<int> rotation_map = new List<int>();
 
             determine_rotation_map(index, rotation_map);
 
-            List<List<int>> vertex_list = lattice.GetVertices();
+            List<List<int>> vertex_list = Lattice.GetVertices();
 
             List<int> v = vertex_list[index];      // neighbor list of the site at index
 
@@ -181,10 +180,10 @@ namespace IsingModel
                 return;
 
             // direction of the vector going from index to the stem
-            double dir = ( (-geometryPoints[index]) + geometryPoints[rotation_map[stem]] ).Phase();
+            double dir = ( (-GeometryPoints[index]) + GeometryPoints[rotation_map[stem]] ).Phase();
 
             // Orient the guide vector so that it faces the correct way
-            var between = guide_vector.Rotate(dir);
+            var between = GuideVector.Rotate(dir);
 
             for (int i = 0; i < rotation_map.Count; i++)
             {
@@ -194,7 +193,7 @@ namespace IsingModel
                 if (!valid[k])
                 {
                     // whether between is rotated CW or CWW depends on the ordering of the rotation_map
-                    geometryPoints[k] = geometryPoints[index] + between.Rotate((i - stem) * dt);
+                    GeometryPoints[k] = GeometryPoints[index] + between.Rotate((i - stem) * dt);
                     valid[k] = true;
                 }
             }

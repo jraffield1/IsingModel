@@ -6,7 +6,12 @@ namespace IsingModel
     {
         static void Main(string[] args)
         {
-            var geomGraph = new LatticeGeometry(3, 7, 1, 0.5);
+            var geomGraph = Utililties.CreateLatticeGeometry(3, 7, 5);
+
+            foreach(var point in geomGraph.GeometryPoints)
+            {
+                Console.WriteLine(point.ToString());
+            }
         }
     }
 }
